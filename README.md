@@ -65,6 +65,20 @@ That command reads the raw participant reefer release, audits timestamp consiste
 - `outputs/preprocessed_dataset/test_hourly.csv`
 - `outputs/preprocessed_dataset/preprocessing_summary.json`
 
+## Base-Feature Dataset Derivation
+
+To create narrow copies of the existing preprocessed exports that keep only the original non-history columns and drop every explicit lag column matching `*_tminusNh`:
+
+```bash
+python derive_base_feature_dataset.py
+```
+
+That command reads the existing wide files in `outputs/preprocessed_dataset/` and writes:
+
+- `outputs/preprocessed_dataset/trainval_hourly_base.csv`
+- `outputs/preprocessed_dataset/test_hourly_base.csv`
+- `outputs/preprocessed_dataset/base_feature_dataset_summary.json`
+
 ## Challenge Understanding
 
 - The forecasting target is the combined hourly electricity demand of plugged-in reefer containers.

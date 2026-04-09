@@ -18,6 +18,16 @@ Derived datasets are written to:
 - `outputs/preprocessed_dataset/test_hourly.csv`
 - `outputs/preprocessed_dataset/preprocessing_summary.json`
 
+Base-feature-only derivatives can be created from those wide exports with:
+
+- `derive_base_feature_dataset.py`
+
+That utility writes:
+
+- `outputs/preprocessed_dataset/trainval_hourly_base.csv`
+- `outputs/preprocessed_dataset/test_hourly_base.csv`
+- `outputs/preprocessed_dataset/base_feature_dataset_summary.json`
+
 The pipeline entrypoint is:
 
 - `preprocess_dataset.py`
@@ -67,6 +77,8 @@ Column breakdown:
 
 - `25` non-history columns
 - `2,674` explicit history columns
+
+The base-only derivative keeps exactly those `25` non-history columns and removes every column whose name ends with `_tminus{N}h`.
 
 Only `191` early warmup rows were dropped from trainval because the longest reefer history requires prior context.
 
