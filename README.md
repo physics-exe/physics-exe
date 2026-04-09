@@ -51,6 +51,20 @@ By default this reads:
 
 and writes a dedicated report to `outputs/weather_analysis/report.html`.
 
+## Dataset Preprocessing
+
+To build the day-ahead-safe derived dataset for later modeling:
+
+```bash
+python preprocess_dataset.py
+```
+
+That command reads the raw participant reefer release, audits timestamp consistency and DST behavior, repairs the large March-April history gap by reordering the non-test sequence, engineers explicit hour-by-hour `t-minus` history windows that are safe for a 24-hour-ahead setup, attaches weather-history availability flags, and writes:
+
+- `outputs/preprocessed_dataset/trainval_hourly.csv`
+- `outputs/preprocessed_dataset/test_hourly.csv`
+- `outputs/preprocessed_dataset/preprocessing_summary.json`
+
 ## Challenge Understanding
 
 - The forecasting target is the combined hourly electricity demand of plugged-in reefer containers.

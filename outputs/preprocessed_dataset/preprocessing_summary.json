@@ -1,0 +1,573 @@
+{
+  "raw_reefer_summary": {
+    "row_count": 3774557,
+    "hourly_count": 8403,
+    "timestamp_min_utc": "2025-01-01T00:00:00Z",
+    "timestamp_max_utc": "2026-01-10T06:00:00Z",
+    "raw_rows_monotonic_non_decreasing": false,
+    "invalid_timestamp_rows": 0,
+    "missing_power_rows": 0,
+    "negative_power_rows": 0,
+    "negative_hourly_label_count": 0
+  },
+  "dropped_raw_columns": [
+    "container_visit_uuid",
+    "container_uuid",
+    "customer_uuid",
+    "ContainerSize",
+    "AvPowerCons",
+    "TtlEnergyConsHour",
+    "TtlEnergyCons"
+  ],
+  "reefer_dst_audit": {
+    "timezone": "Europe/Berlin",
+    "transition_count": 2,
+    "transitions": [
+      {
+        "transition_utc": "2025-03-30T01:00:00Z",
+        "offset_before_hours": 1.0,
+        "offset_after_hours": 2.0
+      },
+      {
+        "transition_utc": "2025-10-26T01:00:00Z",
+        "offset_before_hours": 2.0,
+        "offset_after_hours": 1.0
+      }
+    ],
+    "non_hourly_gap_count": 1,
+    "non_hourly_gaps_near_dst_windows": [],
+    "requires_adjustment": false,
+    "assessment": "source_hours_already_use_one_consistent_basis",
+    "adjusted_record_count": 0
+  },
+  "gap_repair": {
+    "gap_found": true,
+    "largest_gap_hours": 581,
+    "gap_start_utc": "2025-03-30T08:00:00Z",
+    "gap_end_utc": "2025-04-23T13:00:00Z",
+    "pre_gap_count": 2121,
+    "post_gap_count": 6059,
+    "moved_block_source_start_utc": "2025-01-01T00:00:00Z",
+    "moved_block_source_end_utc": "2025-03-30T08:00:00Z",
+    "moved_block_effective_start_utc": "2026-01-01T00:00:00Z",
+    "moved_block_effective_end_utc": "2026-03-30T08:00:00Z"
+  },
+  "weather_feature_merge": {
+    "available": true,
+    "selected_weather_features": [
+      "weather_temperature_vc_halle3_c",
+      "weather_temperature_mean_c",
+      "weather_temperature_zentralgate_c",
+      "weather_wind_direction_vc_halle3_cos",
+      "weather_wind_direction_mean_cos",
+      "weather_wind_direction_zentralgate_cos",
+      "weather_wind_direction_zentralgate_consistency",
+      "weather_wind_speed_vc_halle3",
+      "weather_wind_speed_spread",
+      "weather_temperature_spread_c",
+      "weather_wind_speed_zentralgate",
+      "weather_wind_speed_mean",
+      "weather_wind_direction_zentralgate_sin",
+      "weather_wind_direction_vc_halle3_consistency",
+      "weather_wind_direction_mean_sin",
+      "weather_wind_direction_mean_consistency",
+      "weather_wind_direction_vc_halle3_sin"
+    ],
+    "merged_hour_count": 3204,
+    "weather_hourly_start_utc": "2025-09-24T10:00:00Z",
+    "weather_hourly_end_utc": "2026-02-23T14:00:00Z",
+    "raw_weather_feature_count": 17,
+    "weather_source_summary": {
+      "source_files": [
+        {
+          "file_name": "CTH_Temperatur_VC_Halle3 Okt 25 - 23 Feb 26.csv",
+          "metric": "temperature",
+          "location": "vc_halle3",
+          "hourly_observations": 3166
+        },
+        {
+          "file_name": "CTH_Temperatur_Zentralgate  Okt 25 - 23 Feb 26.csv",
+          "metric": "temperature",
+          "location": "zentralgate",
+          "hourly_observations": 3200
+        },
+        {
+          "file_name": "CTH_Wind_VC_Halle3  Okt 25 - 23 Feb 26.csv",
+          "metric": "wind_speed",
+          "location": "vc_halle3",
+          "hourly_observations": 3168
+        },
+        {
+          "file_name": "CTH_Wind_Zentralgate  Okt 25 - 23 Feb 26.csv",
+          "metric": "wind_speed",
+          "location": "zentralgate",
+          "hourly_observations": 3201
+        },
+        {
+          "file_name": "CTH_Windrichtung_VC_Halle3  Okt 25 - 23 Feb 26.csv",
+          "metric": "wind_direction",
+          "location": "vc_halle3",
+          "hourly_observations": 2690
+        },
+        {
+          "file_name": "CTH_Windrichtung_Zentralgate  Okt 25 - 23 Feb 26.csv",
+          "metric": "wind_direction",
+          "location": "zentralgate",
+          "hourly_observations": 2688
+        }
+      ],
+      "hourly_timestamp_count": 3204
+    }
+  },
+  "feature_engineering": {
+    "forecast_horizon_hours": 24,
+    "reefer_history_windows_hours": {
+      "label_power_kw": 168,
+      "active_rows": 168,
+      "unique_containers": 168,
+      "unique_visits": 168,
+      "distinct_customers": 168,
+      "mean_power_per_active_reefer_kw": 168,
+      "mean_stack_tier": 48,
+      "share_stack_tier_1": 48,
+      "share_stack_tier_2": 48,
+      "share_stack_tier_3": 48,
+      "share_hardware_scc6": 48,
+      "share_hardware_decosvb": 48,
+      "share_hardware_ml5": 48,
+      "share_hardware_decosiiih": 48,
+      "share_hardware_decosiiij": 48,
+      "share_hardware_decosva": 48,
+      "share_hardware_mp4000": 48,
+      "share_hardware_ml3": 48,
+      "share_hardware_other": 48,
+      "mean_temperature_setpoint_c": 48,
+      "mean_temperature_ambient_c": 48,
+      "mean_temperature_return_c": 48,
+      "mean_temperature_supply_c": 48,
+      "mean_ambient_minus_setpoint_c": 48,
+      "mean_return_minus_supply_c": 48
+    },
+    "weather_history_windows_hours": {
+      "weather_temperature_vc_halle3_c": 51,
+      "weather_temperature_mean_c": 44,
+      "weather_temperature_zentralgate_c": 46,
+      "weather_wind_direction_vc_halle3_cos": 60,
+      "weather_wind_direction_mean_cos": 62,
+      "weather_wind_direction_zentralgate_cos": 63,
+      "weather_wind_direction_zentralgate_consistency": 26,
+      "weather_wind_speed_vc_halle3": 57,
+      "weather_wind_speed_spread": 43,
+      "weather_temperature_spread_c": 43,
+      "weather_wind_speed_zentralgate": 42,
+      "weather_wind_speed_mean": 42,
+      "weather_wind_direction_zentralgate_sin": 35,
+      "weather_wind_direction_vc_halle3_consistency": 37,
+      "weather_wind_direction_mean_sin": 36,
+      "weather_wind_direction_mean_consistency": 30,
+      "weather_wind_direction_vc_halle3_sin": 37
+    },
+    "trainval": {
+      "filled_small_gaps": {
+        "mean_temperature_setpoint_c": 0,
+        "mean_temperature_ambient_c": 0,
+        "mean_temperature_return_c": 0,
+        "mean_temperature_supply_c": 0,
+        "mean_ambient_minus_setpoint_c": 0,
+        "mean_return_minus_supply_c": 0,
+        "weather_temperature_vc_halle3_c": 0,
+        "weather_temperature_mean_c": 0,
+        "weather_temperature_zentralgate_c": 0,
+        "weather_wind_direction_vc_halle3_cos": 0,
+        "weather_wind_direction_mean_cos": 0,
+        "weather_wind_direction_zentralgate_cos": 0,
+        "weather_wind_direction_zentralgate_consistency": 0,
+        "weather_wind_speed_vc_halle3": 0,
+        "weather_wind_speed_spread": 0,
+        "weather_temperature_spread_c": 0,
+        "weather_wind_speed_zentralgate": 0,
+        "weather_wind_speed_mean": 0,
+        "weather_wind_direction_zentralgate_sin": 0,
+        "weather_wind_direction_vc_halle3_consistency": 0,
+        "weather_wind_direction_mean_sin": 0,
+        "weather_wind_direction_mean_consistency": 0,
+        "weather_wind_direction_vc_halle3_sin": 0
+      },
+      "dropped_rows_by_reason": {
+        "warmup_incomplete_history": 191
+      },
+      "generated_feature_count": 2674,
+      "generated_feature_name_sample": [
+        "label_power_kw_tminus24h",
+        "label_power_kw_tminus25h",
+        "label_power_kw_tminus26h",
+        "label_power_kw_tminus27h",
+        "label_power_kw_tminus28h",
+        "label_power_kw_tminus29h",
+        "label_power_kw_tminus30h",
+        "label_power_kw_tminus31h",
+        "label_power_kw_tminus32h",
+        "label_power_kw_tminus33h",
+        "label_power_kw_tminus34h",
+        "label_power_kw_tminus35h",
+        "label_power_kw_tminus36h",
+        "label_power_kw_tminus37h",
+        "label_power_kw_tminus38h",
+        "label_power_kw_tminus39h",
+        "label_power_kw_tminus40h",
+        "label_power_kw_tminus41h",
+        "label_power_kw_tminus42h",
+        "label_power_kw_tminus43h",
+        "label_power_kw_tminus44h",
+        "label_power_kw_tminus45h",
+        "label_power_kw_tminus46h",
+        "label_power_kw_tminus47h",
+        "label_power_kw_tminus48h",
+        "label_power_kw_tminus49h",
+        "label_power_kw_tminus50h",
+        "label_power_kw_tminus51h",
+        "label_power_kw_tminus52h",
+        "label_power_kw_tminus53h"
+      ],
+      "history_windows_hours": {
+        "label_power_kw": 168,
+        "active_rows": 168,
+        "unique_containers": 168,
+        "unique_visits": 168,
+        "distinct_customers": 168,
+        "mean_power_per_active_reefer_kw": 168,
+        "mean_stack_tier": 48,
+        "share_stack_tier_1": 48,
+        "share_stack_tier_2": 48,
+        "share_stack_tier_3": 48,
+        "share_hardware_scc6": 48,
+        "share_hardware_decosvb": 48,
+        "share_hardware_ml5": 48,
+        "share_hardware_decosiiih": 48,
+        "share_hardware_decosiiij": 48,
+        "share_hardware_decosva": 48,
+        "share_hardware_mp4000": 48,
+        "share_hardware_ml3": 48,
+        "share_hardware_other": 48,
+        "mean_temperature_setpoint_c": 48,
+        "mean_temperature_ambient_c": 48,
+        "mean_temperature_return_c": 48,
+        "mean_temperature_supply_c": 48,
+        "mean_ambient_minus_setpoint_c": 48,
+        "mean_return_minus_supply_c": 48,
+        "weather_temperature_vc_halle3_c": 51,
+        "weather_temperature_mean_c": 44,
+        "weather_temperature_zentralgate_c": 46,
+        "weather_wind_direction_vc_halle3_cos": 60,
+        "weather_wind_direction_mean_cos": 62,
+        "weather_wind_direction_zentralgate_cos": 63,
+        "weather_wind_direction_zentralgate_consistency": 26,
+        "weather_wind_speed_vc_halle3": 57,
+        "weather_wind_speed_spread": 43,
+        "weather_temperature_spread_c": 43,
+        "weather_wind_speed_zentralgate": 42,
+        "weather_wind_speed_mean": 42,
+        "weather_wind_direction_zentralgate_sin": 35,
+        "weather_wind_direction_vc_halle3_consistency": 37,
+        "weather_wind_direction_mean_sin": 36,
+        "weather_wind_direction_mean_consistency": 30,
+        "weather_wind_direction_vc_halle3_sin": 37
+      },
+      "rows_before_full_weather_history": 5672,
+      "rows_with_incomplete_weather_history": 1045,
+      "weather_history_availability_columns": [
+        "weather_history_expected",
+        "weather_history_complete",
+        "weather_history_expected_feature_count",
+        "weather_history_available_feature_count",
+        "weather_history_available_fraction"
+      ]
+    },
+    "test": {
+      "filled_small_gaps": {
+        "mean_temperature_setpoint_c": 0,
+        "mean_temperature_ambient_c": 0,
+        "mean_temperature_return_c": 0,
+        "mean_temperature_supply_c": 0,
+        "mean_ambient_minus_setpoint_c": 0,
+        "mean_return_minus_supply_c": 0,
+        "weather_temperature_vc_halle3_c": 0,
+        "weather_temperature_mean_c": 0,
+        "weather_temperature_zentralgate_c": 0,
+        "weather_wind_direction_vc_halle3_cos": 0,
+        "weather_wind_direction_mean_cos": 0,
+        "weather_wind_direction_zentralgate_cos": 0,
+        "weather_wind_direction_zentralgate_consistency": 0,
+        "weather_wind_speed_vc_halle3": 0,
+        "weather_wind_speed_spread": 0,
+        "weather_temperature_spread_c": 0,
+        "weather_wind_speed_zentralgate": 0,
+        "weather_wind_speed_mean": 0,
+        "weather_wind_direction_zentralgate_sin": 0,
+        "weather_wind_direction_vc_halle3_consistency": 0,
+        "weather_wind_direction_mean_sin": 0,
+        "weather_wind_direction_mean_consistency": 0,
+        "weather_wind_direction_vc_halle3_sin": 0
+      },
+      "dropped_rows_by_reason": {
+        "warmup_incomplete_history": 191
+      },
+      "generated_feature_count": 2674,
+      "generated_feature_name_sample": [
+        "label_power_kw_tminus24h",
+        "label_power_kw_tminus25h",
+        "label_power_kw_tminus26h",
+        "label_power_kw_tminus27h",
+        "label_power_kw_tminus28h",
+        "label_power_kw_tminus29h",
+        "label_power_kw_tminus30h",
+        "label_power_kw_tminus31h",
+        "label_power_kw_tminus32h",
+        "label_power_kw_tminus33h",
+        "label_power_kw_tminus34h",
+        "label_power_kw_tminus35h",
+        "label_power_kw_tminus36h",
+        "label_power_kw_tminus37h",
+        "label_power_kw_tminus38h",
+        "label_power_kw_tminus39h",
+        "label_power_kw_tminus40h",
+        "label_power_kw_tminus41h",
+        "label_power_kw_tminus42h",
+        "label_power_kw_tminus43h",
+        "label_power_kw_tminus44h",
+        "label_power_kw_tminus45h",
+        "label_power_kw_tminus46h",
+        "label_power_kw_tminus47h",
+        "label_power_kw_tminus48h",
+        "label_power_kw_tminus49h",
+        "label_power_kw_tminus50h",
+        "label_power_kw_tminus51h",
+        "label_power_kw_tminus52h",
+        "label_power_kw_tminus53h"
+      ],
+      "history_windows_hours": {
+        "label_power_kw": 168,
+        "active_rows": 168,
+        "unique_containers": 168,
+        "unique_visits": 168,
+        "distinct_customers": 168,
+        "mean_power_per_active_reefer_kw": 168,
+        "mean_stack_tier": 48,
+        "share_stack_tier_1": 48,
+        "share_stack_tier_2": 48,
+        "share_stack_tier_3": 48,
+        "share_hardware_scc6": 48,
+        "share_hardware_decosvb": 48,
+        "share_hardware_ml5": 48,
+        "share_hardware_decosiiih": 48,
+        "share_hardware_decosiiij": 48,
+        "share_hardware_decosva": 48,
+        "share_hardware_mp4000": 48,
+        "share_hardware_ml3": 48,
+        "share_hardware_other": 48,
+        "mean_temperature_setpoint_c": 48,
+        "mean_temperature_ambient_c": 48,
+        "mean_temperature_return_c": 48,
+        "mean_temperature_supply_c": 48,
+        "mean_ambient_minus_setpoint_c": 48,
+        "mean_return_minus_supply_c": 48,
+        "weather_temperature_vc_halle3_c": 51,
+        "weather_temperature_mean_c": 44,
+        "weather_temperature_zentralgate_c": 46,
+        "weather_wind_direction_vc_halle3_cos": 60,
+        "weather_wind_direction_mean_cos": 62,
+        "weather_wind_direction_zentralgate_cos": 63,
+        "weather_wind_direction_zentralgate_consistency": 26,
+        "weather_wind_speed_vc_halle3": 57,
+        "weather_wind_speed_spread": 43,
+        "weather_temperature_spread_c": 43,
+        "weather_wind_speed_zentralgate": 42,
+        "weather_wind_speed_mean": 42,
+        "weather_wind_direction_zentralgate_sin": 35,
+        "weather_wind_direction_vc_halle3_consistency": 37,
+        "weather_wind_direction_mean_sin": 36,
+        "weather_wind_direction_mean_consistency": 30,
+        "weather_wind_direction_vc_halle3_sin": 37
+      },
+      "rows_before_full_weather_history": 5672,
+      "rows_with_incomplete_weather_history": 1045,
+      "weather_history_availability_columns": [
+        "weather_history_expected",
+        "weather_history_complete",
+        "weather_history_expected_feature_count",
+        "weather_history_available_feature_count",
+        "weather_history_available_fraction"
+      ],
+      "selected_test_row_count": 223
+    }
+  },
+  "exports": {
+    "trainval_row_count": 7989,
+    "test_row_count": 223,
+    "trainval_effective_continuity": {
+      "gap_count": 0,
+      "largest_gap_hours": 0,
+      "gaps": []
+    },
+    "test_source_continuity": {
+      "gap_count": 0,
+      "largest_gap_hours": 0,
+      "gaps": []
+    },
+    "test_matches_target_exactly": true,
+    "test_first_timestamp_utc": "2026-01-01T00:00:00Z",
+    "test_last_timestamp_utc": "2026-01-10T06:00:00Z",
+    "trainval_first_effective_timestamp_utc": "2025-05-01T12:00:00Z",
+    "trainval_last_effective_timestamp_utc": "2026-03-30T08:00:00Z"
+  },
+  "weather_audit": {
+    "available": true,
+    "file_count": 6,
+    "files": [
+      {
+        "file_name": "CTH_Temperatur_VC_Halle3 Okt 25 - 23 Feb 26.csv",
+        "row_count": 168479,
+        "null_value_rows": 59,
+        "invalid_timestamp_rows": 0,
+        "hourly_timestamp_count": 3166,
+        "timestamp_min_utc": "2025-09-24T10:00:50Z",
+        "timestamp_max_utc": "2026-02-23T13:59:27Z",
+        "missing_hour_count": 486,
+        "largest_gap_hours": 383,
+        "dst_audit": {
+          "timezone": "Europe/Berlin",
+          "transition_count": 1,
+          "transitions": [
+            {
+              "transition_utc": "2025-10-26T01:00:00Z",
+              "offset_before_hours": 2.0,
+              "offset_after_hours": 1.0
+            }
+          ],
+          "non_hourly_gap_count": 6,
+          "non_hourly_gaps_near_dst_windows": [],
+          "requires_adjustment": false,
+          "assessment": "source_hours_already_use_one_consistent_basis"
+        }
+      },
+      {
+        "file_name": "CTH_Temperatur_Zentralgate  Okt 25 - 23 Feb 26.csv",
+        "row_count": 67022,
+        "null_value_rows": 25,
+        "invalid_timestamp_rows": 0,
+        "hourly_timestamp_count": 3200,
+        "timestamp_min_utc": "2025-09-24T10:00:50Z",
+        "timestamp_max_utc": "2026-02-23T13:57:47Z",
+        "missing_hour_count": 452,
+        "largest_gap_hours": 383,
+        "dst_audit": {
+          "timezone": "Europe/Berlin",
+          "transition_count": 1,
+          "transitions": [
+            {
+              "transition_utc": "2025-10-26T01:00:00Z",
+              "offset_before_hours": 2.0,
+              "offset_after_hours": 1.0
+            }
+          ],
+          "non_hourly_gap_count": 4,
+          "non_hourly_gaps_near_dst_windows": [],
+          "requires_adjustment": false,
+          "assessment": "source_hours_already_use_one_consistent_basis"
+        }
+      },
+      {
+        "file_name": "CTH_Wind_VC_Halle3  Okt 25 - 23 Feb 26.csv",
+        "row_count": 3451733,
+        "null_value_rows": 60,
+        "invalid_timestamp_rows": 0,
+        "hourly_timestamp_count": 3168,
+        "timestamp_min_utc": "2025-09-24T10:00:50Z",
+        "timestamp_max_utc": "2026-02-23T14:03:31Z",
+        "missing_hour_count": 485,
+        "largest_gap_hours": 383,
+        "dst_audit": {
+          "timezone": "Europe/Berlin",
+          "transition_count": 1,
+          "transitions": [
+            {
+              "transition_utc": "2025-10-26T01:00:00Z",
+              "offset_before_hours": 2.0,
+              "offset_after_hours": 1.0
+            }
+          ],
+          "non_hourly_gap_count": 5,
+          "non_hourly_gaps_near_dst_windows": [],
+          "requires_adjustment": false,
+          "assessment": "source_hours_already_use_one_consistent_basis"
+        }
+      },
+      {
+        "file_name": "CTH_Wind_Zentralgate  Okt 25 - 23 Feb 26.csv",
+        "row_count": 3405597,
+        "null_value_rows": 24,
+        "invalid_timestamp_rows": 0,
+        "hourly_timestamp_count": 3201,
+        "timestamp_min_utc": "2025-09-24T10:00:50Z",
+        "timestamp_max_utc": "2026-02-23T13:48:00Z",
+        "missing_hour_count": 451,
+        "largest_gap_hours": 383,
+        "dst_audit": {
+          "timezone": "Europe/Berlin",
+          "transition_count": 1,
+          "transitions": [
+            {
+              "transition_utc": "2025-10-26T01:00:00Z",
+              "offset_before_hours": 2.0,
+              "offset_after_hours": 1.0
+            }
+          ],
+          "non_hourly_gap_count": 5,
+          "non_hourly_gaps_near_dst_windows": [],
+          "requires_adjustment": false,
+          "assessment": "source_hours_already_use_one_consistent_basis"
+        }
+      },
+      {
+        "file_name": "CTH_Windrichtung_VC_Halle3  Okt 25 - 23 Feb 26.csv",
+        "row_count": 3231544,
+        "null_value_rows": 39,
+        "invalid_timestamp_rows": 0,
+        "hourly_timestamp_count": 2690,
+        "timestamp_min_utc": "2025-11-01T00:00:01Z",
+        "timestamp_max_utc": "2026-02-23T14:06:50Z",
+        "missing_hour_count": 61,
+        "largest_gap_hours": 45,
+        "dst_audit": {
+          "timezone": "Europe/Berlin",
+          "transition_count": 0,
+          "transitions": [],
+          "non_hourly_gap_count": 2,
+          "non_hourly_gaps_near_dst_windows": [],
+          "requires_adjustment": false,
+          "assessment": "source_hours_already_use_one_consistent_basis"
+        }
+      },
+      {
+        "file_name": "CTH_Windrichtung_Zentralgate  Okt 25 - 23 Feb 26.csv",
+        "row_count": 3189530,
+        "null_value_rows": 19,
+        "invalid_timestamp_rows": 0,
+        "hourly_timestamp_count": 2688,
+        "timestamp_min_utc": "2025-11-01T00:00:01Z",
+        "timestamp_max_utc": "2026-02-23T14:01:10Z",
+        "missing_hour_count": 63,
+        "largest_gap_hours": 45,
+        "dst_audit": {
+          "timezone": "Europe/Berlin",
+          "transition_count": 0,
+          "transitions": [],
+          "non_hourly_gap_count": 3,
+          "non_hourly_gaps_near_dst_windows": [],
+          "requires_adjustment": false,
+          "assessment": "source_hours_already_use_one_consistent_basis"
+        }
+      }
+    ]
+  }
+}
