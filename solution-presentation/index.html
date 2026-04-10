@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>physics.exe Reefer Forecast Presentation</title>
+    <meta
+      name="description"
+      content="Presentation site for the physics.exe hackathon solution to the reefer peak-load forecasting challenge."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-glow page-glow-a"></div>
+    <div class="page-glow page-glow-b"></div>
+    <header class="topbar">
+      <a class="brand" href="#top">
+        <span class="brand-mark">PX</span>
+        <span class="brand-copy">
+          <strong>physics.exe</strong>
+          <span>Reefer Forecast Story</span>
+        </span>
+      </a>
+      <nav class="topnav">
+        <a href="#forecast">Forecast</a>
+        <a href="#signals">Signals</a>
+        <a href="#model">Model</a>
+        <a href="#gallery">Evidence</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero reveal" id="top">
+        <div class="hero-copy">
+          <p class="eyebrow">Hackathon Presentation Website</p>
+          <h1>Forecasting Reefer Power Peaks with a Lightweight Neural Generator</h1>
+          <p class="hero-text">
+            This site presents the physics.exe solution for the reefer peak-load challenge:
+            a compact autoregressive notebook model, January forecast results, and the
+            operational and weather signals that shaped the final predictions.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#forecast">Explore January Rollout</a>
+            <a class="button button-secondary" href="#model">See Model Anatomy</a>
+          </div>
+        </div>
+        <div class="hero-panel glass">
+          <p class="panel-label">Challenge Metric</p>
+          <div class="formula">
+            <span>0.5 × MAE all</span>
+            <span>+</span>
+            <span>0.3 × MAE peak</span>
+            <span>+</span>
+            <span>0.2 × pinball p90</span>
+          </div>
+          <div class="mini-grid" id="weightCards"></div>
+        </div>
+      </section>
+
+      <section class="stats-strip reveal" id="heroStats"></section>
+
+      <section class="section reveal" id="challenge">
+        <div class="section-head">
+          <p class="eyebrow">What Had To Be Solved</p>
+          <h2>The terminal needs a reliable view of tomorrow’s reefer demand</h2>
+        </div>
+        <div class="challenge-grid">
+          <article class="glass prose-card">
+            <p>
+              The challenge is about forecasting the combined electricity demand of
+              plugged-in refrigerated containers. The goal is not just a good average
+              prediction, but strong behavior during high-load hours and a useful
+              upper-bound estimate for risk-aware planning.
+            </p>
+            <p>
+              In practice, that means combining operational state, seasonality, and weather
+              context into a forecast that still stays simple enough to explain and present.
+            </p>
+          </article>
+          <article class="glass prose-card">
+            <p class="panel-label">Narrative anchors</p>
+            <ul class="signal-list" id="narrativePoints"></ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal" id="forecast">
+        <div class="section-head">
+          <p class="eyebrow">January 2026 Forecast Window</p>
+          <h2>Ten days of predictions, observed overlap, and the p90 safety band</h2>
+        </div>
+        <div class="forecast-layout">
+          <article class="glass chart-card chart-card-large">
+            <div class="card-topline">
+              <p class="panel-label">Main rollout plot</p>
+              <span class="card-note">Point forecast, p90 band, and actual overlap</span>
+            </div>
+            <div id="januaryForecastChart" class="chart-frame"></div>
+          </article>
+          <div class="results-grid" id="resultCards"></div>
+        </div>
+        <div class="two-up">
+          <article class="glass chart-card">
+            <div class="card-topline">
+              <p class="panel-label">Daily error profile</p>
+              <span class="card-note">Mean absolute error by day in the January overlap</span>
+            </div>
+            <div id="dailyMaeChart" class="chart-frame"></div>
+          </article>
+          <article class="glass table-card">
+            <div class="card-topline">
+              <p class="panel-label">Hardest hours</p>
+              <span class="card-note">Largest absolute misses in the overlap period</span>
+            </div>
+            <div id="errorHoursTable" class="table-list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal" id="signals">
+        <div class="section-head">
+          <p class="eyebrow">Data Understanding</p>
+          <h2>The strongest signal is operational load, but temperature sharpens the story</h2>
+        </div>
+        <div class="signals-grid">
+          <article class="glass chart-card">
+            <div class="card-topline">
+              <p class="panel-label">Historical load trace</p>
+              <span class="card-note">Downsampled hourly terminal demand across the full dataset</span>
+            </div>
+            <div id="yearlyPowerChart" class="chart-frame"></div>
+          </article>
+          <article class="glass chart-card">
+            <div class="card-topline">
+              <p class="panel-label">Hour-of-day profile</p>
+              <span class="card-note">Average reefer power by hour of day</span>
+            </div>
+            <div id="hourProfileChart" class="chart-frame"></div>
+          </article>
+          <article class="glass chart-card">
+            <div class="card-topline">
+              <p class="panel-label">Operational intensity</p>
+              <span class="card-note">More active containers usually means more demand</span>
+            </div>
+            <div id="containerScatterChart" class="chart-frame"></div>
+          </article>
+          <article class="glass chart-card">
+            <div class="card-topline">
+              <p class="panel-label">Weather relationship</p>
+              <span class="card-note">VC Halle 3 temperature shows the strongest same-hour weather signal</span>
+            </div>
+            <div id="weatherScatterChart" class="chart-frame"></div>
+          </article>
+        </div>
+        <div class="two-up">
+          <article class="glass rank-card">
+            <div class="card-topline">
+              <p class="panel-label">Top reefer-side features</p>
+              <span class="card-note">Correlation and permutation-importance evidence</span>
+            </div>
+            <div id="featureRanks"></div>
+          </article>
+          <article class="glass rank-card">
+            <div class="card-topline">
+              <p class="panel-label">Weather memory</p>
+              <span class="card-note">Temperature history becomes especially useful beyond 48 hours</span>
+            </div>
+            <div id="weatherRanks"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal" id="model">
+        <div class="section-head">
+          <p class="eyebrow">Model Anatomy</p>
+          <h2>A compact notebook workflow turned sequential data into next-hour forecasts</h2>
+        </div>
+        <div class="model-layout">
+          <article class="glass process-card">
+            <div class="card-topline">
+              <p class="panel-label">Notebook pipeline</p>
+              <span class="card-note">The logic implemented in <code>generative_models.ipynb</code></span>
+            </div>
+            <div class="process-flow" id="processFlow"></div>
+          </article>
+          <article class="glass architecture-card">
+            <div class="card-topline">
+              <p class="panel-label">Generator architecture</p>
+              <span class="card-note">Simple enough to explain, expressive enough to adapt</span>
+            </div>
+            <div class="nn-stack">
+              <div class="nn-node">
+                <span class="nn-label">Input</span>
+                <strong id="inputSizeValue"></strong>
+                <small>current power signal</small>
+              </div>
+              <div class="nn-arrow"></div>
+              <div class="nn-node accent">
+                <span class="nn-label">Hidden</span>
+                <strong id="hiddenSizeValue"></strong>
+                <small>ReLU generator block</small>
+              </div>
+            <div class="nn-arrow"></div>
+              <div class="nn-node">
+                <span class="nn-label">Output</span>
+                <strong id="outputSizeValue"></strong>
+                <small>next-hour power</small>
+              </div>
+            </div>
+            <div class="config-grid" id="configGrid"></div>
+            <div class="layer-breakdown" id="layerBreakdown"></div>
+            <div class="chips" id="featureChips"></div>
+          </article>
+        </div>
+        <article class="glass detailed-diagram-card">
+          <div class="card-topline">
+            <p class="panel-label">Detailed Prediction Diagram</p>
+            <span class="card-note">End-to-end view of feature screening, network paths, training, and January rollout</span>
+          </div>
+          <div id="detailedModelDiagram" class="detailed-model-diagram"></div>
+        </article>
+      </section>
+
+      <section class="section reveal" id="gallery">
+        <div class="section-head">
+          <p class="eyebrow">Repo Evidence Gallery</p>
+          <h2>Generated analysis figures that support the forecasting story</h2>
+        </div>
+        <div class="gallery-grid">
+          <figure class="glass gallery-card">
+            <img src="./assets/label_timeseries.svg" alt="Label time series plot" />
+            <figcaption>Historical aggregate reefer load across the available horizon.</figcaption>
+          </figure>
+          <figure class="glass gallery-card">
+            <img src="./assets/day_hour_heatmap.svg" alt="Day hour heatmap plot" />
+            <figcaption>Daily and hourly structure that motivates calendar-aware features.</figcaption>
+          </figure>
+          <figure class="glass gallery-card">
+            <img src="./assets/feature_importance.svg" alt="Feature importance plot" />
+            <figcaption>Operational state and temperature features dominate the model story.</figcaption>
+          </figure>
+          <figure class="glass gallery-card">
+            <img src="./assets/weather_history_window_usefulness.svg" alt="Weather usefulness plot" />
+            <figcaption>Weather history remains informative far beyond a single recent hour.</figcaption>
+          </figure>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Built from repository outputs in <code>physics-exe/outputs</code>, including the
+        January predictions, the notebook workflow, the reefer feature table, and the
+        weather analysis exports.
+      </p>
+    </footer>
+
+    <script src="./data/siteData.js"></script>
+    <script src="./main.js"></script>
+  </body>
+</html>

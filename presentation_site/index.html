@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>physics.exe | Reefer Forecast Presentation</title>
+  <meta
+    name="description"
+    content="Presentation website for the physics.exe reefer peak-load forecasting solution in hackathon_reefer_dl."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-glow page-glow-one"></div>
+  <div class="page-glow page-glow-two"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#top">physics.exe / reefer dl</a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="#challenge">Challenge</a>
+      <a href="#forecast">Forecast</a>
+      <a href="#signals">Signals</a>
+      <a href="#model">Model</a>
+      <a href="#experiments">Experiments</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero reveal">
+      <div class="hero-copy">
+        <p class="eyebrow">FSL Reefer Peak-Load Challenge</p>
+        <h1>Turning the `hackathon_reefer_dl` solution into a presentation-ready story.</h1>
+        <p class="hero-text">
+          This site summarizes the day-ahead reefer-load forecasting pipeline built in
+          <code>hackathon_reefer_dl</code>: strict <code>T-24h</code> features, a residual tabular MLP,
+          calibrated upper-risk estimates, and the lag-aware final blend that produced the strongest public result
+          in the repo.
+        </p>
+        <div class="chip-row chip-row-hero" id="hero-facts">
+          <span class="chip chip-static">223 public target hours</span>
+          <span class="chip chip-static">January 1-10, 2026</span>
+          <span class="chip chip-static">24h-ahead forecast</span>
+          <span class="chip chip-static">336h history window</span>
+        </div>
+      </div>
+
+      <div class="hero-panel">
+        <div class="hero-panel-top">
+          <p class="panel-label">Context View</p>
+          <h2>The public leaderboard window sits at the end of a full year of reefer dynamics.</h2>
+        </div>
+        <figure class="plot-card plot-card-hero">
+          <img
+            src="assets/plots/history_context.svg"
+            alt="Historical reefer load series with the January 2026 public forecast window highlighted."
+          >
+        </figure>
+      </div>
+    </section>
+
+    <section class="metric-band reveal">
+      <div class="metric-grid" id="metric-grid"></div>
+    </section>
+
+    <section id="challenge" class="content-section reveal">
+      <div class="section-heading">
+        <p class="eyebrow">Challenge Setup</p>
+        <h2>Forecast hourly reefer electricity demand one day ahead, with a useful upper-risk estimate.</h2>
+      </div>
+
+      <div class="two-col-grid">
+        <article class="panel">
+          <p class="panel-label">Objective</p>
+          <h3>Predict the terminal's aggregate reefer power demand for every released public timestamp.</h3>
+          <p>
+            The target is not a single container. It is the combined hourly load of all plugged-in reefer
+            containers, which means the model has to capture both the changing container mix and the cooling
+            conditions across the yard.
+          </p>
+          <ul class="plain-list" id="challenge-facts"></ul>
+        </article>
+
+        <article class="panel">
+          <p class="panel-label">Score Function</p>
+          <div class="formula-card">
+            <span>0.5 × MAE_all</span>
+            <span>+</span>
+            <span>0.3 × MAE_peak</span>
+            <span>+</span>
+            <span>0.2 × pinball_p90</span>
+          </div>
+          <p>
+            The scoring setup punishes missed peaks, not just average error. That is why the solution uses both a
+            point forecast and a calibrated <code>p90</code> upper band instead of treating uncertainty as an
+            afterthought.
+          </p>
+          <div class="small-note">
+            Everything shown here is labeled clearly as public-window performance. The hidden private rerun was
+            reserved for the organizers.
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="forecast" class="content-section reveal">
+      <div class="section-heading">
+        <p class="eyebrow">Forecast Window</p>
+        <h2>The final blend smooths the raw network output without losing the peak-sensitive structure.</h2>
+      </div>
+
+      <div class="forecast-grid">
+        <figure class="plot-card plot-card-wide">
+          <img
+            src="assets/plots/january_forecast.svg"
+            alt="Public January 2026 forecast chart with actual load, raw model, winning final blend, and p90 band."
+          >
+          <figcaption>
+            The main headline plot: actual load vs the raw residual MLP, the winning final blend, and the calibrated
+            <code>p90</code> band across January 1-10, 2026.
+          </figcaption>
+        </figure>
+
+        <figure class="plot-card">
+          <img
+            src="assets/plots/daily_mae.svg"
+            alt="Daily mean absolute error across the public window comparing lag24, tabular MLP, and final blend."
+          >
+          <figcaption>
+            Day-by-day MAE shows where the blend reduces volatility relative to both the lag baseline and the raw
+            model.
+          </figcaption>
+        </figure>
+
+        <figure class="plot-card">
+          <img
+            src="assets/plots/peak_scatter.svg"
+            alt="Scatter plot of actual versus predicted load for the winning final blend with peak hours highlighted."
+          >
+          <figcaption>
+            Peak handling matters because the evaluation metric explicitly rewards it. The orange points are the
+            highest-load hours in the public window.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="signals" class="content-section reveal">
+      <div class="section-heading">
+        <p class="eyebrow">Signals And Structure</p>
+        <h2>The model is simple in form, but it is aimed at the signals that matter most.</h2>
+      </div>
+
+      <div class="signals-grid">
+        <figure class="plot-card">
+          <img
+            src="assets/plots/active_count_scatter.svg"
+            alt="Scatter density showing active container count versus aggregate reefer load."
+          >
+          <figcaption>
+            Across the full history, active reefer count is the clearest operational driver of aggregate power demand.
+          </figcaption>
+        </figure>
+
+        <figure class="plot-card">
+          <img
+            src="assets/plots/feature_importance.svg"
+            alt="Horizontal bar chart of the most important forward-safe features by MAE impact."
+          >
+          <figcaption>
+            Feature-priority analysis confirms that load memory, calendar position, and reefer state dominate the
+            predictive signal.
+          </figcaption>
+        </figure>
+
+        <figure class="plot-card">
+          <img
+            src="assets/plots/weather_windows.svg"
+            alt="Horizontal bar chart of efficient and peak weather history window lengths."
+          >
+          <figcaption>
+            Weather mattered most through temperature history, and the useful context was much longer than just the
+            last few hours.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="model" class="content-section reveal">
+      <div class="section-heading">
+        <p class="eyebrow">ML Model</p>
+        <h2>A transparent forecasting stack: residual learning, calibration, then a lag-aware blend.</h2>
+      </div>
+
+      <div class="two-col-grid diagrams-grid">
+        <article class="panel panel-diagram">
+          <p class="panel-label">Pipeline Diagram</p>
+          <h3>Strict T-24 feature flow</h3>
+          <div class="flow-diagram">
+            <div class="flow-node">Raw reefer + weather files</div>
+            <div class="flow-arrow"></div>
+            <div class="flow-node">Hourly feature store</div>
+            <div class="flow-arrow"></div>
+            <div class="flow-node">336h history ending at T-24h</div>
+            <div class="flow-arrow"></div>
+            <div class="flow-node flow-node-accent">Residual tabular MLP</div>
+            <div class="flow-arrow"></div>
+            <div class="flow-node">Point + P90 calibration</div>
+            <div class="flow-arrow"></div>
+            <div class="flow-node flow-node-highlight">Tercile-aware final blend</div>
+          </div>
+          <p class="diagram-note">
+            The leakage guardrail is explicit: every target hour only sees information that would already be known
+            24 hours earlier.
+          </p>
+        </article>
+
+        <article class="panel panel-diagram">
+          <p class="panel-label">Network Diagram</p>
+          <h3>Residual tabular MLP</h3>
+          <div class="network-diagram">
+            <div class="input-stack">
+              <div class="network-node">Last admissible feature row</div>
+              <div class="network-node">7 target-time calendar values</div>
+              <div class="network-node">Lag baseline scalar</div>
+            </div>
+            <div class="network-core">
+              <div class="network-branch">Linear shortcut</div>
+              <div class="network-branch network-branch-accent">3-layer MLP<br>LayerNorm + SiLU + dropout</div>
+            </div>
+            <div class="output-stack">
+              <div class="network-node">Learned residual</div>
+              <div class="network-node network-node-highlight">Baseline + residual = point forecast</div>
+            </div>
+          </div>
+          <p class="diagram-note">
+            The model predicts a correction on top of a strong day-ahead baseline instead of trying to invent the full
+            load curve from scratch.
+          </p>
+        </article>
+      </div>
+
+      <div class="detail-grid">
+        <article class="panel detail-panel">
+          <p class="panel-label">Winning Recipe</p>
+          <h3>Best public result = raw MLP output plus reproducible post-processing.</h3>
+          <p>
+            The public score improved materially when the model output was blended with the lag-24 baseline according
+            to low, medium, and high load terciles. That kept the method simple, explainable, and well aligned with
+            the challenge metric.
+          </p>
+          <div class="chip-row" id="blend-chips"></div>
+        </article>
+
+        <article class="panel detail-panel">
+          <p class="panel-label">Feature Strategy</p>
+          <h3>Load and calendar features were the most robust under the hackathon runtime budget.</h3>
+          <ul class="plain-list" id="feature-notes"></ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="experiments" class="content-section reveal">
+      <div class="section-heading">
+        <p class="eyebrow">Experiment Ladder</p>
+        <h2>The final jump came from disciplined blending, not from a larger black-box model.</h2>
+      </div>
+
+      <div class="two-col-grid experiments-grid">
+        <figure class="plot-card">
+          <img
+            src="assets/plots/model_ladder.svg"
+            alt="Horizontal bar chart comparing public composite scores across submission variants."
+          >
+          <figcaption>
+            A compact view of the public-window progression from the organizer baseline to the winning final blend.
+          </figcaption>
+        </figure>
+
+        <article class="panel table-panel">
+          <p class="panel-label">Metric Table</p>
+          <h3>Public-window score breakdown</h3>
+          <div class="table-wrap">
+            <table class="metrics-table">
+              <thead>
+                <tr>
+                  <th>Variant</th>
+                  <th>Composite</th>
+                  <th>MAE all</th>
+                  <th>MAE peak</th>
+                  <th>P90 pinball</th>
+                </tr>
+              </thead>
+              <tbody id="experiment-table-body"></tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-section reveal">
+      <div class="section-heading">
+        <p class="eyebrow">Bottom Line</p>
+        <h2>The solution wins by being careful, not by being flashy.</h2>
+      </div>
+
+      <div class="takeaway-grid" id="takeaways"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Built from `participant_package` plus `hackathon_reefer_dl` artifacts. <span id="generated-at"></span></p>
+  </footer>
+
+  <script src="assets/data/presentation-data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
