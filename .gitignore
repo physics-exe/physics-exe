@@ -208,3 +208,8 @@ __marimo__/
 
 # Generated plots
 *.png
+
+# Local-only large artifacts that exceed GitHub's file size limit
+hackathon_reefer_dl/reefer_release.csv
+hackathon_reefer_dl/runtime_full_january_package/
+outputs/preprocessed_dataset_full_january/trainval_hourly.csv
